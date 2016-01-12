@@ -61,15 +61,13 @@ def copyToClip(element):
     print (element, "is in the clipboard")
 
 def clearClip():
-    global password
-    password = ''
-    os.system("echo '%s' | pbcopy" % password)
+    trash = ''
+    os.system("echo '%s' | pbcopy" % trash)
     reset()
-    print (password, "is in the clipboard")
 
 def reset():
     global password
-    password = ''
+    password = 'password1'
     passlabel.configure(text = password)
 
 window = Tk()
