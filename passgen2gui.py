@@ -1,29 +1,14 @@
 from tkinter import *
 import random
 import os
+import string
 
-lowerCase = 'abcdefghijklmnopqrstuvwxyz'
-upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-digits = '1234567890'
-specChars = '!@#$%^&*()-=_+,.<>?/\| '
-charset = lowerCase + upperCase + digits + specChars
+charset = string.punctuation + string.ascii_letters #string of characters for random password generation
 
-bestDice = 6
-bestRandom = 16
-ver = 0.03 #ver 0.03 is the first GUI version
+bestDice = 6 #initialize random slider to this value
+bestRandom = 16 #initialize diceware wordlength slider to this valu
 
-
-
-'''    
-f = open('dicewaremaster.txt', 'r') #opens dicewaremaster file
-for l in f:
-    k, v = l.split()
-    if k in dic:
-        dic[k].extend(v)
-    else:
-        dic[k] = [v]
-f.close() #closes txt file
-'''
+ver = 0.031 #ver 0.03 is the first GUI version, 031 added Maori dic, some code cleanup
     
 def diceware(length):
     dic = {} #creates empty dictionary for key/values from dicewaremaster.txt
