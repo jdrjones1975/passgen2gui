@@ -2,13 +2,17 @@ from tkinter import *
 import random
 import os
 import string
-#string.punctuation + 
-#charset = string.ascii_letters + string.digits #string of characters for random password generation
 
 bestDice = 6 #initialize random slider to this value
 bestRandom = 16 #initialize diceware wordlength slider to this valu
 
-ver = 0.031 #ver 0.03 is the first GUI version, 031 added Maori dic, some code cleanup
+ver = 0.04
+'''
+ver 0.03 is the first GUI version
+ver 0.031 added Maori dic, some code cleanup
+ver 0.032 made the random characters chooseable
+ver 0.04 added the jumbler function
+'''
     
 def diceware(length):
     dic = {} #creates empty dictionary for key/values from dicewaremaster.txt
@@ -64,6 +68,31 @@ def dicewareMaori(length):
     dic = {}
     passlabel.configure(text = password, bg = "white")
 
+def randomize(str):
+    global password
+    changelings = '!@#$%^&*() '
+    letters = string.ascii_letters + string.digits
+    randomizerStrength = 1
+    
+    x=[]
+    for i in range(len(str)):
+        swap = random.randint(1,10)
+        if swap <= randomizerStrength:
+            if str[i].isupper():     
+                x.append(str[i].lower())
+            elif str[i].islower():
+                x.append(str[i].upper())
+            elif str[i].isspace():
+                x.append(str[i])
+            elif str[i].isprintable():
+                x.append(random.choice(letters))
+        elif swap == 10:
+            x.append(random.choice(changelings))
+        else:
+            x.append(str[i])
+
+    password = (''.join(x))
+    passlabel.configure(text = password, bg = "white")
 
 def flatten(lst):
     for elem in lst:
@@ -149,6 +178,7 @@ genMaori.configure(command = lambda : dicewareMaori(dicewareScale.get()))
 genRandom.grid(row = 1, column = 0)
 genDice.grid(row = 1, column = 1)
 genMaori.grid(row = 2, column = 1)
+
 frame2.grid(row = 2, column = 0)
 letters.grid(row=0, column = 0)
 numbers.grid(row=0, column = 1)
@@ -158,6 +188,10 @@ specchars2.grid(row=1, column = 1)
 passlabel = Label(window, text = password)
 passlabel.pack(pady = 10)
 frame1.pack()
+
+randomizer = Button(window, text = "Jumbler")
+randomizer.configure(command = lambda : randomize(password))
+randomizer.pack()
 
 copy = Button(window, text = "Copy Password")
 copy.configure(command = lambda : copyToClip(password))
